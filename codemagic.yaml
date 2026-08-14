@@ -1,0 +1,20 @@
+workflows:
+  android-debug:
+    name: عالم نور - Android APK
+    max_build_duration: 60
+    instance_type: linux_x2
+    environment:
+      flutter: stable
+    scripts:
+      - name: تثبيت الاعتماديات
+        script: flutter pub get
+      - name: فحص Dart
+        script: flutter analyze lib --no-fatal-warnings --no-fatal-infos
+      - name: بناء APK تجريبي
+        script: flutter build apk --debug
+    artifacts:
+      - build/app/outputs/flutter-apk/*.apk
+    publishing:
+      email:
+        recipients:
+          - $CM_BUILD_USER_EMAIL
